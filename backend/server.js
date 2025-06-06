@@ -32,9 +32,9 @@ app.post('/login', (req, res) => {
 
 // Submit data endpoint
 app.post('/submit', (req, res) => {
-    const { username, location, time, work } = req.body;
+    const { username, location, date, time, work } = req.body;
     if (!users[username]) return res.status(401).json({ success: false, message: 'Unauthorized' });
-    records.push({ id: uuidv4(), username, location, time, work });
+    records.push({ id: uuidv4(), username, location, date, time, work });
     res.json({ success: true });
 });
 

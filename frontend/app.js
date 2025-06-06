@@ -45,6 +45,15 @@ function showDashboard() {
   document.getElementById('user-form').style.display = isAdmin ? 'none' : 'block';
   // Set records label for admin or user
   document.getElementById('records-label').innerText = isAdmin ? 'All Team Records' : 'Your Records';
+  // Set date input to today by default
+  var dateInput = document.getElementById('date');
+  if (dateInput) {
+    const today = new Date();
+    const yyyy = today.getFullYear();
+    const mm = String(today.getMonth() + 1).padStart(2, '0');
+    const dd = String(today.getDate()).padStart(2, '0');
+    dateInput.value = `${yyyy}-${mm}-${dd}`;
+  }
   loadRecords();
 }
 
@@ -92,11 +101,12 @@ async function register() {
 
 async function submitData() {
   const location = document.getElementById('location').value.trim();
-  const time = document.getElementById('time').value.trim();
+  const date = document.getElementById('date').value;
+  const time = document.getElementById('time').value;
   const work = document.getElementById('work').value.trim();
   const msg = document.getElementById('dashboard-msg');
   msg.innerText = '';
-  if (!location || !time || !work) {
+  if (!location || !date || !time || !work) {
     msg.innerText = 'Please fill all fields.';
     return;
   }
@@ -104,12 +114,13 @@ async function submitData() {
     const res = await fetch(API + '/submit', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ username: currentUser, location, time, work })
+      body: JSON.stringify({ username: currentUser, location, date, time, work })
     });
     const data = await res.json();
     if (data.success) {
       msg.innerText = 'Submitted!';
       document.getElementById('location').value = '';
+      document.getElementById('date').value = '';
       document.getElementById('time').value = '';
       document.getElementById('work').value = '';
       loadRecords();
@@ -128,11 +139,12 @@ async function loadRecords() {
     if (Array.isArray(data)) {
       for (const r of data) {
         const tr = document.createElement('tr');
-        tr.innerHTML = `<td>${r.username}</td><td>${r.location}</td><td>${r.time}</td><td>${r.work}</td>`;
+        tr.className = 'fade-in';
+        tr.innerHTML = `<td>${r.username}</td><td>${r.location}</td><td>${r.date || ''}</td><td>${r.time}</td><td>${r.work}</td>`;
         tbody.appendChild(tr);
       }
     }
-  } catch (e) { tbody.innerHTML = '<tr><td colspan="4">Network error</td></tr>'; }
+  } catch (e) { tbody.innerHTML = '<tr><td colspan="5">Network error</td></tr>'; }
 }
 
 function logout() {

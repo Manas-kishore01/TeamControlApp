@@ -5,13 +5,92 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Team Manager</title>
   <style>
-    body { font-family: Arial, sans-serif; margin: 40px; }
+    body {
+      font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+      margin: 0;
+      background: linear-gradient(120deg, #f4f6fb 0%, #e0e7ef 100%);
+      min-height: 100vh;
+    }
+    .container {
+      max-width: 430px;
+      margin: 48px auto;
+      background: #fff;
+      border-radius: 18px;
+      box-shadow: 0 6px 32px rgba(99,102,241,0.10);
+      padding: 36px 28px 28px 28px;
+      animation: fadeIn 0.7s;
+    }
+    h2, h3, h4 { margin-top: 0; letter-spacing: 0.5px; }
+    input, button, select {
+      margin: 12px 0; width: 100%; padding: 13px; border-radius: 9px; border: 1.5px solid #d1d5db;
+      font-size: 1.05rem; transition: border 0.2s, box-shadow 0.2s;
+      background: #f9fafb;
+    }
+    input:focus, select:focus {
+      border: 1.5px solid #6366f1;
+      outline: none;
+      box-shadow: 0 0 0 2px #6366f133;
+    }
+    button {
+      background: linear-gradient(90deg, #6366f1 0%, #60a5fa 100%);
+      color: #fff;
+      border: none;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(99,102,241,0.10);
+      transition: background 0.2s, transform 0.1s;
+      letter-spacing: 0.5px;
+    }
+    button:hover {
+      background: linear-gradient(90deg, #60a5fa 0%, #6366f1 100%);
+      transform: translateY(-2px) scale(1.04);
+    }
     .hidden { display: none; }
-    .container { max-width: 400px; margin: auto; }
-    input, button, select { margin: 8px 0; width: 100%; padding: 8px; }
-    table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-    th, td { border: 1px solid #ccc; padding: 6px; text-align: left; }
-    th { background: #eee; }
+    .fade-in { animation: fadeIn 0.5s; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(18px);} to { opacity: 1; transform: none; } }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 22px;
+      background: #f9fafb;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(99,102,241,0.04);
+    }
+    th, td {
+      border: none;
+      padding: 12px 8px;
+      text-align: left;
+      font-size: 1.01rem;
+    }
+    th {
+      background: #e0e7ef;
+      font-weight: 600;
+      color: #374151;
+      letter-spacing: 0.5px;
+    }
+    tr { transition: background 0.2s; }
+    tr:hover { background: #e0e7ef; }
+    #dashboard-msg, #login-msg, #register-msg {
+      min-height: 24px;
+      color: #e11d48;
+      font-size: 1.01rem;
+      margin-top: 8px;
+      letter-spacing: 0.2px;
+    }
+    #user-form {
+      margin-bottom: 10px;
+      background: #f3f4f6;
+      border-radius: 8px;
+      padding: 16px 10px 10px 10px;
+      box-shadow: 0 1px 4px rgba(99,102,241,0.04);
+      animation: fadeIn 0.7s;
+    }
+    @media (max-width: 600px) {
+      .container { max-width: 99vw; padding: 10px 2vw 14px 2vw; }
+      table, thead, tbody, th, td, tr { font-size: 0.99rem; }
+      h2, h3, h4 { font-size: 1.1rem; }
+    }
   </style>
 </head>
 <body>
@@ -34,16 +113,17 @@
     <div id="dashboard" class="hidden">
       <h3 id="welcome"></h3>
       <div id="user-form">
-        <input id="location" placeholder="Location">
-        <input id="time" placeholder="Time">
-        <input id="work" placeholder="Work">
+        <input id="location" placeholder="Location (e.g. Office, Site)" required>
+        <input id="date" type="date" placeholder="Date" required value="">
+        <input id="time" type="time" placeholder="Time" required>
+        <input id="work" placeholder="Work Description" required>
         <button onclick="submitData()">Submit</button>
       </div>
       <div id="records-section">
         <h4 id="records-label">Records</h4>
         <table id="records-table">
           <thead>
-            <tr><th>User</th><th>Location</th><th>Time</th><th>Work</th></tr>
+            <tr><th>User</th><th>Location</th><th>Date</th><th>Time</th><th>Work</th></tr>
           </thead>
           <tbody></tbody>
         </table>
