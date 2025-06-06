@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Team Manager</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 40px; }
+    .hidden { display: none; }
+    .container { max-width: 400px; margin: auto; }
+    input, button, select { margin: 8px 0; width: 100%; padding: 8px; }
+    table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+    th, td { border: 1px solid #ccc; padding: 6px; text-align: left; }
+    th { background: #eee; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2 id="title">Login</h2>
+    <div id="login-form">
+      <input id="login-username" placeholder="Username" autocomplete="username">
+      <input id="login-password" type="password" placeholder="Password" autocomplete="current-password">
+      <button onclick="login()">Login</button>
+      <p>or <a href="#" onclick="showRegister()">Register</a></p>
+      <div id="login-msg"></div>
+    </div>
+    <div id="register-form" class="hidden">
+      <input id="register-username" placeholder="Username">
+      <input id="register-password" type="password" placeholder="Password">
+      <button onclick="register()">Register</button>
+      <p>or <a href="#" onclick="showLogin()">Login</a></p>
+      <div id="register-msg"></div>
+    </div>
+    <div id="dashboard" class="hidden">
+      <h3 id="welcome"></h3>
+      <div id="user-form">
+        <input id="location" placeholder="Location">
+        <input id="time" placeholder="Time">
+        <input id="work" placeholder="Work">
+        <button onclick="submitData()">Submit</button>
+      </div>
+      <div id="records-section">
+        <h4>Records</h4>
+        <table id="records-table">
+          <thead>
+            <tr><th>User</th><th>Location</th><th>Time</th><th>Work</th></tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+      <button onclick="logout()">Logout</button>
+      <div id="dashboard-msg"></div>
+    </div>
+  </div>
+  <script src="app.js"></script>
+</body>
+</html>
