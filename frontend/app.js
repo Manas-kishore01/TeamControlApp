@@ -1,4 +1,4 @@
-const API = 'http://localhost:5000'; // Change to your backend URL if deployed
+const API = 'https://teamcontrolapp.onrender.com';
 let currentUser = null;
 let isAdmin = false;
 
@@ -7,6 +7,13 @@ function showLogin() {
   document.getElementById('login-form').classList.remove('hidden');
   document.getElementById('register-form').classList.add('hidden');
   document.getElementById('dashboard').classList.add('hidden');
+  // Ensure event listeners are set every time
+  document.getElementById('login-username').onkeydown = function(e) {
+    if (e.key === 'Enter') login();
+  };
+  document.getElementById('login-password').onkeydown = function(e) {
+    if (e.key === 'Enter') login();
+  };
 }
 
 function showRegister() {
@@ -14,6 +21,19 @@ function showRegister() {
   document.getElementById('login-form').classList.add('hidden');
   document.getElementById('register-form').classList.remove('hidden');
   document.getElementById('dashboard').classList.add('hidden');
+  // Ensure event listeners are set every time
+  document.getElementById('register-username').onkeydown = function(e) {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      register();
+    }
+  };
+  document.getElementById('register-password').onkeydown = function(e) {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      register();
+    }
+  };
 }
 
 function showDashboard() {
@@ -23,6 +43,8 @@ function showDashboard() {
   document.getElementById('dashboard').classList.remove('hidden');
   document.getElementById('welcome').innerText = `Welcome, ${currentUser}${isAdmin ? ' (Admin)' : ''}`;
   document.getElementById('user-form').style.display = isAdmin ? 'none' : 'block';
+  // Set records label for admin or user
+  document.getElementById('records-label').innerText = isAdmin ? 'All Team Records' : 'Your Records';
   loadRecords();
 }
 
@@ -118,5 +140,13 @@ function logout() {
   isAdmin = false;
   showLogin();
 }
+
+// Expose functions to global scope
+window.login = login;
+window.register = register;
+window.submitData = submitData;
+window.showRegister = showRegister;
+window.showLogin = showLogin;
+window.logout = logout;
 
 showLogin();
